@@ -35,7 +35,6 @@ const AddUser = props => {
         Form['age'].value = ''
     }
 
-    // TODO: работает при клике на'Okay' в модальном окне ошибки 
     const errorHandler = () => {
         setError(null)
     }

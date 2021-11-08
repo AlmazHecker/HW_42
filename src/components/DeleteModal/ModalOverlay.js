@@ -5,7 +5,7 @@ import Button from '../UI/Button/Button';
 const ModalOverlay = props => {
     return <Card className={classes.modal}>
         <header className={classes.header}>
-            <h2>Delete or cancel</h2>
+            <h2>Delete modal</h2>
         </header>
         <div className={classes.content}>
             <p>Do you want to delete this User ?</p>

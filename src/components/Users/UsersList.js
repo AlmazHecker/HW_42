@@ -1,7 +1,6 @@
 import React from "react";
 import Card from "../UI/Card/Card";
 import classes from "./UsersList.module.css";
-
 import RenderUsers from './RenderUsers'
 
 const UsersList = props => {
