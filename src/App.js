@@ -1,51 +1,64 @@
 import React, { useState } from 'react';
-import Expenses from './components/Expense/Expenses';
-import NewExpense from './components/NewExpense/NewExpense';
-
-const INIT_STATE = [
-  {
-    id: 'e1',
-    title: 'Toilet Paper',
-    amount: 94.12,
-    date: new Date(2020, 7, 14),
-  },
-  {
-    id: 'e2',
-    title: 'New TV',
-    amount: 799.49,
-    date: new Date(2021, 2, 12)
-  },
-  {
-    id: 'e3',
-    title: 'Car Insurance',
-    amount: 294.67,
-    date: new Date(2021, 2, 28),
-  },
-  {
-    id: 'e4',
-    title: 'New Desk (Wooden)',
-    amount: 450,
-    date: new Date(2021, 5, 12),
-  },
-];
+import AddUser from './components/Users/AddUser';
+import UsersList from './components/Users/UsersList';
 
 function App() {
-  const [expenses, setExpenses] = useState(INIT_STATE);
+  const [userList, setUserList] = useState([
+    {name: 'Almaz', age: 16, id: 1},
+    {name: 'Чупапи', age: 20, id: 2},
+  ]);
+  
+  const addUserHandler = (uName, uAge) => {
+    setUserList((prevUserList) => {
+      return [
+        ...prevUserList,
+        { 
+          name: uName, 
+          age: uAge, 
+          id: Math.random().toString() 
+        },
+      ] }) };
 
-  const addExpenseHandler = (expense) => {
-    console.log(expense);
+    function onDeleteUser(userId){
+      setUserList( (prevUsers) => {
+        const updatedUsers = prevUsers.filter(user => user.id !== userId);
+        return updatedUsers;
+      })
+    }
 
-    setExpenses( prevExpenses => {
-      return [expense, ...prevExpenses]
-    })
-  }
+    // TODO: функция для изменения ника если появилась ошибкай
+    function onChangeUser(userId, name, age){
+      setUserList( prevUsers => {
+
+        const updatedUsers = prevUsers.map(user => {
+          if(user.id === userId){
+            console.log(user);
+            user.name = name
+            user.age = age
+          }
+          return user;
+        })
+        return updatedUsers;
+      })
+    }
+        // TODO: старый код 
+      //   const changedUser = {
+      //     name: name,
+      //     age: age,
+      //     id: userId,
+      //   }
+      //   // TODO: для того чтобы user не раздвоился
+      //   const updatedUsers = prevUsers.filter(user => user.id !== userId)
+        
+      //   // TODO: так user раздвоится
+      //   updatedUsers.unshift(changedUser)
+
 
   return (
-    <div>
-      <NewExpense onAddExpense={addExpenseHandler} />
-      {/* TODO: передаем данные как пропс */}
-      <Expenses expenses={expenses} />
-    </div>
+    <>
+      <AddUser onAddUser={addUserHandler} />
+      <UsersList users={userList} onDelete={onDeleteUser} onChangeUser={onChangeUser}/>
+    </>
   );
 }
 
